@@ -1,0 +1,16 @@
+{
+	"compatibility_date": "2025-10-08",
+	"main": "src/index.ts",
+	"name": "digilab-d1-worker",
+	"upload_source_maps": true,
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_id": "76544327-9ffa-4670-92dc-68683b1756e9",
+			"database_name": "d1-digilab-worker"
+		}
+	],
+	"observability": {
+		"enabled": true
+	}
+}
