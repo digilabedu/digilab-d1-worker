@@ -6,14 +6,19 @@ export default {
 
     // R2 Asset serving for WebGL builds
     // Expect requests like: https://your-worker.workers.dev/assets/Build/zn-vs-s.framework.js.br
-    const prefix = "/unity/"; // prefix for R2 assets
+    const prefix = "/unity/"; // prefix for unity assets
+
+    // Remove leading slash to get the key inside R2 bucket
+    const key = url.pathname.slice(1);
 
     if (!url.pathname.startsWith(prefix)) {
-      return new Response("Not found", { status: 404 });
-    }
+      const obj = await env.DIGILAB_BUCKET.get(key);
+      if (!obj) {
+        return new Response("Not found", { status: 404 });
+      }
 
-    // Remove leading slash + prefix to get the key inside R2 bucket
-    const key = url.pathname.slice(prefix.length);
+      return new Response(obj.body, { status: 200 });
+    }
 
     // Try to fetch object from R2
     const obj = await env.DIGILAB_BUCKET.get(key);
